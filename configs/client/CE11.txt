@@ -1,0 +1,250 @@
+! Last configuration change at 16:24:30 UTC Sun May 17 2026 by youssef
+!
+upgrade fpd auto
+version 15.0
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CE11
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$1UD/$3V8tlQZRz7qJr/aKck1mr/
+!
+aaa new-model
+!
+!
+aaa authentication login default group radius local
+aaa authentication login PRIV1 group radius local
+aaa authentication login PRIV10 group radius local
+aaa authentication login PRIV15 group radius local
+aaa authorization exec default group radius local if-authenticated 
+aaa accounting exec default
+ action-type start-stop
+ group radius
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+!
+!
+ip source-route
+no ip icmp rate-limit unreachable
+ip cef
+!
+!
+!
+!
+no ip domain lookup
+ip domain name ssir.local
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+username youssef privilege 15 secret 5 $1$nzK9$lGyH9R2chfG5h.LT7Iib..
+!
+redundancy
+!
+!
+ip tcp synwait-time 5
+! 
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 172.16.11.11 255.255.255.255
+ !
+!
+interface FastEthernet0/0
+ ip address 192.168.1.2 255.255.255.252
+ duplex half
+ !
+!
+interface FastEthernet1/0
+ ip address 192.168.11.2 255.255.255.252
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet1/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet2/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet2/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet3/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet3/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet4/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet4/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet5/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet5/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet6/0
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+interface FastEthernet6/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+ !
+!
+router ospf 1
+ router-id 11.11.11.11
+ log-adjacency-changes
+ network 172.16.11.11 0.0.0.0 area 11
+ network 192.168.1.0 0.0.0.3 area 11
+ network 192.168.11.0 0.0.0.3 area 11
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+!
+ip access-list standard ACL-MGMT-VTY
+ permit 172.16.20.150
+ permit 172.16.20.100
+ deny   any
+!
+ip access-list extended VTY_ACCESS
+ permit tcp host 172.16.20.100 any eq 22
+ permit tcp host 172.16.20.100 any eq telnet
+ permit tcp host 172.16.20.150 any eq 22
+ permit tcp host 172.16.20.150 any eq telnet
+ permit tcp host 192.168.1.2 any eq 22
+ permit tcp host 192.168.1.2 any eq telnet
+ deny   ip any any log
+!
+ip sla responder
+logging trap warnings
+logging source-interface Loopback0
+logging 172.16.20.250
+no cdp log mismatch duplex
+!
+!
+!
+!
+snmp-server group NMS v3 priv read ALL 
+snmp-server group TEKUP v3 auth 
+snmp-server group MYGROUP v3 auth 
+snmp-server view ALL iso included
+snmp-server community SSIR2024 RO
+snmp-server trap-source Loopback0
+snmp-server enable traps snmp linkdown linkup
+snmp-server enable traps ospf state-change
+snmp-server enable traps ospf cisco-specific state-change nssa-trans-change
+snmp-server enable traps config
+snmp-server enable traps ipsla
+snmp-server host 172.16.20.250 version 2c SSIR2024 
+snmp-server host 172.16.20.250 version 3 auth TEKUP 
+snmp-server host 172.16.20.250 version 3 priv snmpuser 
+snmp-server host 172.16.220.250 version 3 priv snmpuser 
+!
+radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key VPN_SECURITY
+radius-server host 172.16.20.200 auth-port 1645 acct-port 1646 key VPN_SECURITY
+radius-server retransmit 1
+radius-server timeout 2
+!
+control-plane
+ !
+!
+!
+mgcp fax t38 ecm
+mgcp behavior g729-variants static-pt
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ access-class VTY_ACCESS in
+ privilege level 15
+ transport input telnet ssh
+!
+ntp source Loopback0
+ntp server 172.16.20.250
+end
