@@ -153,7 +153,7 @@ PE routers exchange VPN routes via iBGP. No P router needs to know customer rout
 
 ```cisco
 router bgp 65000
- neighbor 4.4.4.4 remote-as 65000
+ neighbor 2.2.2.2 remote-as 100
  neighbor 4.4.4.4 update-source Loopback0
  !
  address-family vpnv4
