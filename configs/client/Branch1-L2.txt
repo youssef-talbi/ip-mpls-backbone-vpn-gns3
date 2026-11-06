@@ -17,9 +17,9 @@ boot-end-marker
 logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
 logging buffered 50000
 logging console discriminator EXCESS
-enable secret 4 2PT9RkPHO/OrTflfha1vMFjuPFMpXRq8ckYq8tJepm2
+enable secret 4 <REDACTED>
 !
-username youssef privilege 15 secret 4 2PT9RkPHO/OrTflfha1vMFjuPFMpXRq8ckYq8tJepm2
+username youssef privilege 15 secret 4 <REDACTED>
 aaa new-model
 !
 !
@@ -162,7 +162,7 @@ snmp-server group NMS v3 priv read ALL notify *tv.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFF
 snmp-server group TEKUP v3 auth 
 snmp-server group MYGROUP v3 auth notify *tv.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF.FFFFFFFF7F 
 snmp-server view ALL iso included
-snmp-server community SSIR RO
+snmp-server community <REDACTED> RO
 snmp-server trap-source Vlan101
 snmp-server location SSIR_Backbone
 snmp-server contact youssef
@@ -170,11 +170,11 @@ snmp-server enable traps snmp linkdown linkup
 snmp-server enable traps ospf state-change
 snmp-server enable traps ospf cisco-specific state-change nssa-trans-change
 snmp-server enable traps ipsla
-snmp-server host 172.16.20.250 version 2c SSIR 
+snmp-server host 172.16.20.250 version 2c <REDACTED> 
 snmp-server host 172.16.20.250 version 3 auth TEKUP 
 snmp-server host 172.16.20.250 version 3 priv snmpuser 
-radius-server host 172.16.20.200 key VPN_SECURITY
-radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key VPN_SECURITY
+radius-server host 172.16.20.200 key <REDACTED>
+radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key <REDACTED>
 radius-server retransmit 1
 radius-server timeout 2
 !
@@ -186,7 +186,7 @@ control-plane
 line con 0
  exec-timeout 0 0
  privilege level 15
- password cisco
+ password <REDACTED>
  logging synchronous
 line aux 0
  exec-timeout 0 0
