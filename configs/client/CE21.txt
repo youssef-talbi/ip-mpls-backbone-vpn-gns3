@@ -11,7 +11,7 @@ hostname CE21
 boot-start-marker
 boot-end-marker
 !
-enable secret 5 $1$jFOp$1f4UFZMuUt5MmI1CQDOMb/
+enable secret 5 <REDACTED>
 !
 aaa new-model
 !
@@ -53,7 +53,7 @@ multilink bundle-name authenticated
 !
 !
 !
-username youssef privilege 15 secret 5 $1$l8Cw$O5XtBi3IX.Khaur2MqX9a0
+username youssef privilege 15 secret 5 <REDACTED>
 !
 redundancy
 !
@@ -205,20 +205,20 @@ snmp-server group NMS v3 priv read ALL
 snmp-server group TEKUP v3 auth 
 snmp-server group MYGROUP v3 auth 
 snmp-server view ALL iso included
-snmp-server community SSIR2024 RO
+snmp-server community <REDACTED> RO
 snmp-server trap-source Loopback0
 snmp-server enable traps snmp linkdown linkup
 snmp-server enable traps ospf state-change
 snmp-server enable traps ospf cisco-specific state-change nssa-trans-change
 snmp-server enable traps config
 snmp-server enable traps ipsla
-snmp-server host 172.16.20.250 version 2c SSIR2024 
+snmp-server host 172.16.20.250 version 2c <REDACTED> 
 snmp-server host 172.16.20.250 version 3 auth TEKUP 
 snmp-server host 172.16.20.250 version 3 priv snmpuser 
 snmp-server host 172.16.220.250 version 3 priv snmpuser 
 !
-radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key VPN_SECURITY
-radius-server host 172.16.20.200 auth-port 1645 acct-port 1646 key VPN_SECURITY
+radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key <REDACTED>
+radius-server host 172.16.20.200 auth-port 1645 acct-port 1646 key <REDACTED>
 radius-server retransmit 1
 radius-server timeout 2
 !
