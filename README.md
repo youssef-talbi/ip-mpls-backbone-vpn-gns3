@@ -54,51 +54,11 @@ This project designs, configures, and validates that kind of network in GNS3 wit
 
 ## 🏗️ Architecture
 
-### Physical Topology
+<p align="center">
+  <img src="topology/architecture.svg" alt="Architecture: P1, P2, PE1 and PE2 in AS 100; the Siege headquarters is dual-homed to PE1 through CE11 and CE21; Branch 1 and Branch 2 connect to PE2; management servers sit in VLAN 20" width="100%">
+</p>
 
-```
-                         MPLS BACKBONE (AS 100)
-
-                  [P1] 3.3.3.3 ─────────── [P2] 4.4.4.4
-                    │   ╲                 ╱   │
-                    │     ╲             ╱     │
-                    │       ╲         ╱       │
-                    │         ╲     ╱         │
-                    │           ╲ ╱           │
-                    │           ╱ ╲           │
-                    │         ╱     ╲         │
-                  [PE1] 1.1.1.1         [PE2] 2.2.2.2
-                   /     \                 /     \
-               [CE11]   [CE21]         [CE12]   [CE22]
-               Siege-1  Siege-2        Branch-1 Branch-2
-
-        ┌────────────────────────┐    ┌────────────────────────┐
-        │      SIEGE SITES       │    │      BRANCH SITES      │
-        │  Fédérateur1 (Active)  │    │  CE12/CE22 (Router)    │
-        │  Fédérateur2 (Standby) │    │  Branch L2 switches    │
-        │  Siege L2 switches     │    │  VLAN 101/102/103/104  │
-        │  VLAN 10/15/20/30      │    └────────────────────────┘
-        │  HSRP + EtherChannel   │
-        └────────────────────────┘
-
-        ┌─────────────────────────────────────────────────────┐
-        │                  MANAGEMENT PLANE                   │
-        │  AAA-SRV (FreeRADIUS) · MON-SRV (Zabbix/NTP/Syslog) │
-        │  ADMIN1 · ADMIN2 — restricted VTY access            │
-        └─────────────────────────────────────────────────────┘
-```
-
-Each PE connects to both P routers, and P1–P2 are linked directly. There is no direct PE1–PE2 link.
-
-### Three Logical Planes
-
-```
-┌─────────────────────────────────────────────────────────────┐
-│  PLANE 1 — TRANSPORT        MPLS/LDP label switching        │
-│  PLANE 2 — CONTROL          OSPF + MP-BGP VPNv4 routing     │
-│  PLANE 3 — MANAGEMENT       RADIUS + SNMP + Zabbix + NTP    │
-└─────────────────────────────────────────────────────────────┘
-```
+Each PE connects to both P routers, and P1–P2 are linked directly. There is no direct PE1–PE2 link: VPN routes travel over the MP-BGP session between the PE loopbacks. The Siège is one campus with two uplinks (CE11 → Fédérateur1, CE21 → Fédérateur2). The original GNS3 screenshots are in [`topology/`](topology/).
 
 ---
 
@@ -426,7 +386,8 @@ ip-mpls-backbone-vpn-gns3/
 │   └── Rapport_MPLS_VPN.pdf          ← Full project report (French)
 │
 ├── topology/
-│   ├── topology.png                   ← Full topology
+│   ├── architecture.svg               ← Architecture diagram (README)
+│   ├── topology.png                   ← Full GNS3 topology
 │   ├── topology_backbone.png          ← GNS3 topology screenshot — Part 1
 │   └── topology_client.png            ← GNS3 topology screenshot — Part 2
 │

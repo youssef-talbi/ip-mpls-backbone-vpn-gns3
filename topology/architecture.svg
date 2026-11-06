@@ -1,0 +1,313 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="990" viewBox="0 0 1400 990" role="img" aria-label="IP/MPLS backbone architecture: P1, P2, PE1 and PE2 in AS 100; Siege headquarters dual-homed to PE1; two branch sites on PE2; management VLAN 20">
+<rect width="1400" height="990" rx="18" fill="#0b1220"/>
+<text x="40" y="56" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="23" font-weight="750" fill="#f1f5f9" text-anchor="start">IP/MPLS Operator Backbone with L3VPN</text>
+<text x="40" y="80" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="400" fill="#94a3b8" text-anchor="start">GNS3 · Cisco IOS · MPLS/LDP · MP-BGP VPNv4 · VRF VPN_SSIR · AS 100</text>
+<rect x="40" y="110" width="360" height="300" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="58" y="136" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">PROTOCOL PLANES</text>
+<rect x="440" y="110" width="520" height="310" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="458" y="136" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">PROVIDER BACKBONE</text>
+<text x="942" y="136" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="end">AS 100</text>
+<rect x="1000" y="110" width="360" height="300" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="1018" y="136" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">LEGEND</text>
+<rect x="40" y="450" width="600" height="510" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="58" y="476" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">SIÈGE (HQ)</text>
+<text x="58" y="494" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="start">Siège 1 + Siège 2</text>
+<text x="58" y="509" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="start">dual uplink to PE1</text>
+<rect x="680" y="450" width="330" height="510" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="698" y="476" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">BRANCH 1</text>
+<text x="992" y="476" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="end">via PE2</text>
+<rect x="1030" y="450" width="330" height="510" rx="14" fill="#101a2d" stroke="#22304d" stroke-width="1.2"/>
+<text x="1048" y="476" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">BRANCH 2</text>
+<text x="1342" y="476" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="end">via PE2</text>
+<rect x="56" y="842" width="425.0" height="106" rx="14" fill="#0d1526" stroke="#22304d" stroke-width="1.2"/>
+<text x="74" y="868" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" fill="#8ea3c7" text-anchor="start" letter-spacing="1.4">MANAGEMENT · VLAN 20 · 172.16.20.0/24</text>
+<circle cx="64" cy="154" r="5" fill="#2dd4bf"/>
+<text x="78" y="158" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13" font-weight="650" fill="#e2e8f0" text-anchor="start">Transport</text>
+<text x="78" y="175" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">MPLS label switching, LDP on every</text>
+<text x="78" y="190" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">backbone link</text>
+<circle cx="64" cy="216" r="5" fill="#f472b6"/>
+<text x="78" y="220" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13" font-weight="650" fill="#e2e8f0" text-anchor="start">Control</text>
+<text x="78" y="237" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">OSPF area 0 between loopbacks,</text>
+<text x="78" y="252" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">MP-BGP VPNv4 between PE1 and PE2</text>
+<circle cx="64" cy="278" r="5" fill="#fbbf24"/>
+<text x="78" y="282" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13" font-weight="650" fill="#e2e8f0" text-anchor="start">Customer</text>
+<text x="78" y="299" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">VRF VPN_SSIR, OSPF (process 100)</text>
+<text x="78" y="314" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">between each PE and its CEs</text>
+<circle cx="64" cy="340" r="5" fill="#c084fc"/>
+<text x="78" y="344" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13" font-weight="650" fill="#e2e8f0" text-anchor="start">Management</text>
+<text x="78" y="361" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">FreeRADIUS AAA, VTY ACL, SNMP traps,</text>
+<text x="78" y="376" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.2" font-weight="400" fill="#94a3b8" text-anchor="start">Zabbix, NTP and Syslog on VLAN 20</text>
+<line x1="1022" y1="152" x2="1062" y2="152" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<text x="1076" y="156" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">Backbone link (OSPF area 0 + LDP)</text>
+<line x1="1022" y1="178" x2="1062" y2="178" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+<text x="1076" y="182" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">PE–CE link in VRF VPN_SSIR</text>
+<line x1="1022" y1="204" x2="1062" y2="204" stroke="#f472b6" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="1076" y="208" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">MP-BGP VPNv4 session (logical)</text>
+<line x1="1022" y1="230" x2="1062" y2="230" stroke="#7c8ba3" stroke-width="2.2" stroke-linecap="round"/>
+<text x="1076" y="234" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">LAN link or 802.1Q trunk</text>
+<line x1="1022" y1="253" x2="1062" y2="253" stroke="#818cf8" stroke-width="2"/>
+<line x1="1022" y1="259" x2="1062" y2="259" stroke="#818cf8" stroke-width="2"/>
+<text x="1076" y="260" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">LACP port-channel</text>
+<circle cx="1030" cy="302" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="1030" y1="302" x2="1025.5" y2="302" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1030" y1="302" x2="1034.5" y2="302" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1030" y1="302" x2="1030" y2="297.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1030" y1="302" x2="1030" y2="306.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1048" y="306" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">Router</text>
+<rect x="1132" y="294.0" width="20" height="16" rx="3" fill="none" stroke="#818cf8" stroke-width="1.8"/>
+<line x1="1137" y1="300" x2="1147" y2="300" stroke="#818cf8" stroke-width="1.6"/>
+<line x1="1137" y1="304" x2="1147" y2="304" stroke="#818cf8" stroke-width="1.6"/>
+<circle cx="1148" cy="297" r="1.6" fill="#818cf8"/>
+<text x="1160" y="306" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">L3 switch</text>
+<rect x="1244" y="296.0" width="20" height="12" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+<line x1="1249" y1="300" x2="1259" y2="300" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="1249" y1="304" x2="1259" y2="304" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="1272" y="306" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">L2 switch</text>
+<rect x="1022" y="330" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<rect x="1022" y="337" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<text x="1048" y="340" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">Server</text>
+<rect x="1133" y="329" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="1137" y1="343.5" x2="1147" y2="343.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1160" y="340" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11.5" font-weight="400" fill="#94a3b8" text-anchor="start">Host</text>
+<line x1="634" y1="178" x2="766" y2="178" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="570" y1="202" x2="570" y2="321" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="830" y1="202" x2="830" y2="321" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="620" y1="321" x2="780" y2="202" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="780" y1="321" x2="620" y2="202" stroke="#2dd4bf" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M 604 369 C 620 404, 780 404, 796 369" fill="none" stroke="#f472b6" stroke-width="2" stroke-dasharray="6 5"/>
+<line x1="546" y1="369" x2="262" y2="498" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="582" y1="369" x2="496" y2="498" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+<line x1="834" y1="369" x2="845" y2="498" stroke="#fbbf24" stroke-width="2.2" stroke-linecap="round"/>
+<path d="M 894 345 H 975 V 433 H 1195 V 498" fill="none" stroke="#fbbf24" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="250" y1="546" x2="250" y2="618" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="490" y1="546" x2="490" y2="618" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="325" y1="639" x2="415" y2="639" stroke="#818cf8" stroke-width="2"/>
+<line x1="325" y1="645" x2="415" y2="645" stroke="#818cf8" stroke-width="2"/>
+<line x1="250" y1="666" x2="250" y2="758" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="490" y1="666" x2="490" y2="758" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="314" y1="782" x2="426" y2="782" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="152" y1="782" x2="186" y2="782" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="250" y1="806" x2="250" y2="842" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="490" y1="806" x2="560" y2="879" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="845" y1="546" x2="845" y2="638" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="845" y1="686" x2="845" y2="778" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="1195" y1="546" x2="1195" y2="638" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<line x1="1195" y1="686" x2="1195" y2="778" stroke="#7c8ba3" stroke-width="1.6" stroke-linecap="round"/>
+<rect x="506.0" y="154.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="506.0" y="162.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="528.0" cy="178" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="528.0" y1="178" x2="523.5" y2="178" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="178" x2="532.5" y2="178" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="178" x2="528.0" y2="173.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="178" x2="528.0" y2="182.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="546.0" y="175" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">P1</text>
+<text x="546.0" y="191" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">3.3.3.3</text>
+<rect x="766.0" y="154.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="766.0" y="162.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="788.0" cy="178" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="788.0" y1="178" x2="783.5" y2="178" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="178" x2="792.5" y2="178" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="178" x2="788.0" y2="173.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="178" x2="788.0" y2="182.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="806.0" y="175" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">P2</text>
+<text x="806.0" y="191" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">4.4.4.4</text>
+<rect x="506.0" y="321.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="506.0" y="329.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="528.0" cy="345" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="528.0" y1="345" x2="523.5" y2="345" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="345" x2="532.5" y2="345" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="345" x2="528.0" y2="340.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="528.0" y1="345" x2="528.0" y2="349.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="546.0" y="342" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PE1</text>
+<text x="546.0" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">1.1.1.1</text>
+<rect x="766.0" y="321.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="766.0" y="329.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="788.0" cy="345" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="788.0" y1="345" x2="783.5" y2="345" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="345" x2="792.5" y2="345" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="345" x2="788.0" y2="340.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="788.0" y1="345" x2="788.0" y2="349.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="806.0" y="342" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PE2</text>
+<text x="806.0" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">2.2.2.2</text>
+<rect x="184.0" y="498.0" width="132" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="184.0" y="506.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="206.0" cy="522" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="206.0" y1="522" x2="201.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="206.0" y1="522" x2="210.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="206.0" y1="522" x2="206.0" y2="517.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="206.0" y1="522" x2="206.0" y2="526.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="224.0" y="519" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">CE11</text>
+<text x="224.0" y="535" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">172.16.11.11</text>
+<rect x="424.0" y="498.0" width="132" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="424.0" y="506.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="446.0" cy="522" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="446.0" y1="522" x2="441.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="446.0" y1="522" x2="450.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="446.0" y1="522" x2="446.0" y2="517.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="446.0" y1="522" x2="446.0" y2="526.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="464.0" y="519" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">CE21</text>
+<text x="464.0" y="535" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">172.16.21.21</text>
+<rect x="175.0" y="618.0" width="150" height="48" rx="10" fill="#0f1830" stroke="#818cf8" stroke-width="1.4"/>
+<rect x="175.0" y="626.0" width="3" height="32" rx="1.5" fill="#818cf8"/>
+<rect x="187.0" y="634.0" width="20" height="16" rx="3" fill="none" stroke="#818cf8" stroke-width="1.8"/>
+<line x1="192.0" y1="640" x2="202.0" y2="640" stroke="#818cf8" stroke-width="1.6"/>
+<line x1="192.0" y1="644" x2="202.0" y2="644" stroke="#818cf8" stroke-width="1.6"/>
+<circle cx="203.0" cy="637" r="1.6" fill="#818cf8"/>
+<text x="215.0" y="639" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Fédérateur1</text>
+<text x="215.0" y="655" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">HSRP active</text>
+<rect x="415.0" y="618.0" width="150" height="48" rx="10" fill="#0f1830" stroke="#818cf8" stroke-width="1.4"/>
+<rect x="415.0" y="626.0" width="3" height="32" rx="1.5" fill="#818cf8"/>
+<rect x="427.0" y="634.0" width="20" height="16" rx="3" fill="none" stroke="#818cf8" stroke-width="1.8"/>
+<line x1="432.0" y1="640" x2="442.0" y2="640" stroke="#818cf8" stroke-width="1.6"/>
+<line x1="432.0" y1="644" x2="442.0" y2="644" stroke="#818cf8" stroke-width="1.6"/>
+<circle cx="443.0" cy="637" r="1.6" fill="#818cf8"/>
+<text x="455.0" y="639" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Fédérateur2</text>
+<text x="455.0" y="655" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">HSRP standby</text>
+<rect x="186.0" y="758.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#94a3b8" stroke-width="1.4"/>
+<rect x="186.0" y="766.0" width="3" height="32" rx="1.5" fill="#94a3b8"/>
+<rect x="198.0" y="776.0" width="20" height="12" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+<line x1="203.0" y1="780" x2="213.0" y2="780" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="203.0" y1="784" x2="213.0" y2="784" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="226.0" y="779" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Siege1-L2</text>
+<text x="226.0" y="795" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">mgmt .101</text>
+<rect x="426.0" y="758.0" width="128" height="48" rx="10" fill="#0f1830" stroke="#94a3b8" stroke-width="1.4"/>
+<rect x="426.0" y="766.0" width="3" height="32" rx="1.5" fill="#94a3b8"/>
+<rect x="438.0" y="776.0" width="20" height="12" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+<line x1="443.0" y1="780" x2="453.0" y2="780" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="443.0" y1="784" x2="453.0" y2="784" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="466.0" y="779" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Siege2-L2</text>
+<text x="466.0" y="795" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">mgmt .102</text>
+<rect x="52.0" y="759.0" width="100" height="46" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="52.0" y="767.0" width="3" height="30" rx="1.5" fill="#64748b"/>
+<rect x="60.0" y="775" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="64.0" y1="789.5" x2="74.0" y2="789.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="83.0" y="779" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PC0 · PC1</text>
+<text x="83.0" y="795" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 20</text>
+<rect x="61.0" y="876.0" width="98" height="60" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="61.0" y="884.0" width="3" height="44" rx="1.5" fill="#64748b"/>
+<rect x="69.0" y="891" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="73.0" y1="905.5" x2="83.0" y2="905.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="71.0" y="919" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">admin host</text>
+<text x="71.0" y="931" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">.100</text>
+<text x="92.0" y="902" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#e2e8f0" text-anchor="start">ADMIN1</text>
+<rect x="165.0" y="876.0" width="98" height="60" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="165.0" y="884.0" width="3" height="44" rx="1.5" fill="#64748b"/>
+<rect x="173.0" y="891" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="177.0" y1="905.5" x2="187.0" y2="905.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="175.0" y="919" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">admin host</text>
+<text x="175.0" y="931" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">.150</text>
+<text x="196.0" y="902" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#e2e8f0" text-anchor="start">ADMIN2</text>
+<rect x="269.0" y="876.0" width="98" height="60" rx="10" fill="#0f1830" stroke="#c084fc" stroke-width="1.4"/>
+<rect x="269.0" y="884.0" width="3" height="44" rx="1.5" fill="#c084fc"/>
+<rect x="278.0" y="892" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<rect x="278.0" y="899" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<text x="279.0" y="919" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">FreeRADIUS</text>
+<text x="279.0" y="931" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">.200</text>
+<text x="300.0" y="902" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#e2e8f0" text-anchor="start">AAA-SRV</text>
+<rect x="373.0" y="876.0" width="98" height="60" rx="10" fill="#0f1830" stroke="#c084fc" stroke-width="1.4"/>
+<rect x="373.0" y="884.0" width="3" height="44" rx="1.5" fill="#c084fc"/>
+<rect x="382.0" y="892" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<rect x="382.0" y="899" width="16" height="6" rx="1.5" fill="none" stroke="#c084fc" stroke-width="1.6"/>
+<text x="383.0" y="919" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">Zabbix 7.0</text>
+<text x="383.0" y="931" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.3" font-weight="400" fill="#94a3b8" text-anchor="start">.250</text>
+<text x="404.0" y="902" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="650" fill="#e2e8f0" text-anchor="start">MON-SRV</text>
+<rect x="522.0" y="881.0" width="96" height="46" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="522.0" y="889.0" width="3" height="30" rx="1.5" fill="#64748b"/>
+<rect x="535.0" y="897" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="539.0" y1="911.5" x2="549.0" y2="911.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="562.0" y="901" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PC2</text>
+<text x="562.0" y="917" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 10</text>
+<rect x="779.0" y="498.0" width="132" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="779.0" y="506.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="801.0" cy="522" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="801.0" y1="522" x2="796.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="801.0" y1="522" x2="805.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="801.0" y1="522" x2="801.0" y2="517.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="801.0" y1="522" x2="801.0" y2="526.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="819.0" y="519" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">CE12</text>
+<text x="819.0" y="535" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">172.16.12.12</text>
+<rect x="775.0" y="638.0" width="140" height="48" rx="10" fill="#0f1830" stroke="#94a3b8" stroke-width="1.4"/>
+<rect x="775.0" y="646.0" width="3" height="32" rx="1.5" fill="#94a3b8"/>
+<rect x="787.0" y="656.0" width="20" height="12" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+<line x1="792.0" y1="660" x2="802.0" y2="660" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="792.0" y1="664" x2="802.0" y2="664" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="815.0" y="659" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Branch1-L2</text>
+<text x="815.0" y="675" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 101/102</text>
+<rect x="769.0" y="778.0" width="152" height="48" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="769.0" y="786.0" width="3" height="32" rx="1.5" fill="#64748b"/>
+<rect x="782.0" y="795" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="786.0" y1="809.5" x2="796.0" y2="809.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="809.0" y="799" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PC3</text>
+<text x="809.0" y="815" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 102 · DHCP</text>
+<rect x="1129.0" y="498.0" width="132" height="48" rx="10" fill="#0f1830" stroke="#2dd4bf" stroke-width="1.4"/>
+<rect x="1129.0" y="506.0" width="3" height="32" rx="1.5" fill="#2dd4bf"/>
+<circle cx="1151.0" cy="522" r="9.5" fill="none" stroke="#2dd4bf" stroke-width="1.8"/>
+<line x1="1151.0" y1="522" x2="1146.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1151.0" y1="522" x2="1155.5" y2="522" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1151.0" y1="522" x2="1151.0" y2="517.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<line x1="1151.0" y1="522" x2="1151.0" y2="526.5" stroke="#2dd4bf" stroke-width="1.8" stroke-linecap="round"/>
+<text x="1169.0" y="519" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">CE22</text>
+<text x="1169.0" y="535" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">172.16.22.22</text>
+<rect x="1125.0" y="638.0" width="140" height="48" rx="10" fill="#0f1830" stroke="#94a3b8" stroke-width="1.4"/>
+<rect x="1125.0" y="646.0" width="3" height="32" rx="1.5" fill="#94a3b8"/>
+<rect x="1137.0" y="656.0" width="20" height="12" rx="3" fill="none" stroke="#94a3b8" stroke-width="1.8"/>
+<line x1="1142.0" y1="660" x2="1152.0" y2="660" stroke="#94a3b8" stroke-width="1.6"/>
+<line x1="1142.0" y1="664" x2="1152.0" y2="664" stroke="#94a3b8" stroke-width="1.6"/>
+<text x="1165.0" y="659" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">Branch2-L2</text>
+<text x="1165.0" y="675" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 103/104</text>
+<rect x="1119.0" y="778.0" width="152" height="48" rx="10" fill="#0f1830" stroke="#64748b" stroke-width="1.4"/>
+<rect x="1119.0" y="786.0" width="3" height="32" rx="1.5" fill="#64748b"/>
+<rect x="1132.0" y="795" width="18" height="11" rx="2" fill="none" stroke="#64748b" stroke-width="1.6"/>
+<line x1="1136.0" y1="809.5" x2="1146.0" y2="809.5" stroke="#64748b" stroke-width="1.6" stroke-linecap="round"/>
+<text x="1159.0" y="799" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="13.5" font-weight="650" fill="#e2e8f0" text-anchor="start">PC4</text>
+<text x="1159.0" y="815" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.8" font-weight="400" fill="#94a3b8" text-anchor="start">VLAN 104 · DHCP</text>
+<rect x="654.5" y="169" width="91" height="18" rx="9" fill="#0b1220" stroke="#2dd4bf" stroke-width="1" stroke-opacity="0.75"/>
+<text x="700" y="181.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">10.1.1.20/30</text>
+<rect x="528.0" y="253" width="84" height="18" rx="9" fill="#0b1220" stroke="#2dd4bf" stroke-width="1" stroke-opacity="0.75"/>
+<text x="570" y="265.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">10.1.1.0/30</text>
+<rect x="788.0" y="253" width="84" height="18" rx="9" fill="#0b1220" stroke="#2dd4bf" stroke-width="1" stroke-opacity="0.75"/>
+<text x="830" y="265.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">10.1.1.8/30</text>
+<rect x="610.0" y="288" width="84" height="18" rx="9" fill="#0b1220" stroke="#2dd4bf" stroke-width="1" stroke-opacity="0.75"/>
+<text x="652" y="300.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">10.1.1.4/30</text>
+<rect x="702.5" y="288" width="91" height="18" rx="9" fill="#0b1220" stroke="#2dd4bf" stroke-width="1" stroke-opacity="0.75"/>
+<text x="748" y="300.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">10.1.1.12/30</text>
+<rect x="632.0" y="388" width="136" height="18" rx="9" fill="#0b1220" stroke="#f472b6" stroke-width="1" stroke-opacity="0.75"/>
+<text x="700" y="400.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">MP-BGP VPNv4 · iBGP</text>
+<rect x="352.0" y="424" width="104" height="18" rx="9" fill="#0b1220" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.75"/>
+<text x="404" y="436.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.1.0/30</text>
+<rect x="487.0" y="424" width="104" height="18" rx="9" fill="#0b1220" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.75"/>
+<text x="539" y="436.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.1.4/30</text>
+<rect x="787.0" y="424" width="104" height="18" rx="9" fill="#0b1220" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.75"/>
+<text x="839" y="436.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.1.8/30</text>
+<rect x="1035.0" y="424" width="110" height="18" rx="9" fill="#0b1220" stroke="#fbbf24" stroke-width="1" stroke-opacity="0.75"/>
+<text x="1090" y="436.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.1.12/30</text>
+<rect x="195.0" y="573" width="110" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="250" y="585.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.11.0/30</text>
+<rect x="435.0" y="573" width="110" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="490" y="585.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">192.168.21.0/30</text>
+<rect x="331.0" y="633" width="78" height="18" rx="9" fill="#0b1220" stroke="#818cf8" stroke-width="1" stroke-opacity="0.75"/>
+<text x="370" y="645.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">Po1 · LACP</text>
+<rect x="201.5" y="723" width="97" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="250" y="735.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">trunk VLAN 20</text>
+<rect x="428.5" y="723" width="123" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="490" y="735.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">trunk 10/15/20/30</text>
+<rect x="318.0" y="773" width="104" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="370" y="785.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">trunk 10/15/20</text>
+<text x="370" y="688" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#94a3b8" text-anchor="middle">HSRP VIP .1 · VLAN 10/15/20</text>
+<text x="370" y="702" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">priority 110 active, 100 standby</text>
+<text x="370" y="716" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">VLAN 30 transit · 192.168.1.44/30</text>
+<rect x="799.5" y="583" width="91" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="845" y="595.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">802.1Q trunk</text>
+<rect x="790.0" y="723" width="110" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="845" y="735.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">access VLAN 102</text>
+<text x="845" y="868" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#94a3b8" text-anchor="middle">Router-on-a-stick on CE12</text>
+<text x="845" y="884" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">DHCP pool for VLAN 102 on CE12</text>
+<text x="845" y="900" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">IP SLA udp-jitter → CE11, CE21</text>
+<rect x="1149.5" y="583" width="91" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="1195" y="595.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">802.1Q trunk</text>
+<rect x="1140.0" y="723" width="110" height="18" rx="9" fill="#0b1220" stroke="#7c8ba3" stroke-width="1" stroke-opacity="0.75"/>
+<text x="1195" y="735.8" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', monospace" font-size="10.5" font-weight="500" fill="#cbd5e1" text-anchor="middle">access VLAN 104</text>
+<text x="1195" y="868" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#94a3b8" text-anchor="middle">Router-on-a-stick on CE22</text>
+<text x="1195" y="884" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">DHCP pool for VLAN 104 on CE22</text>
+<text x="1195" y="900" font-family="Inter, 'Segoe UI', system-ui, -apple-system, Helvetica, Arial, sans-serif" font-size="11" font-weight="500" fill="#64748b" text-anchor="middle">IP SLA udp-jitter → CE11, CE21</text>
+</svg>
