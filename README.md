@@ -7,7 +7,7 @@
 ![Status](https://img.shields.io/badge/All%20Tests-Passed%20✅-success?style=for-the-badge)
 ![University](https://img.shields.io/badge/TEK--UP-2025%2F2026-navy?style=for-the-badge)
 
-**Full simulation of an ISP-grade network infrastructure — from MPLS backbone to client redundancy, AAA security, and real-time supervision.**
+**Full simulation of an ISP-grade network infrastructure — from MPLS backbone to client redundancy, AAA security, and supervision.**
 
 *Academic project — TEK-UP University · Network Security (SSIR-4) · 2025/2026*  
 *Team: Youssef Talbi & Yassine Louati*
@@ -25,6 +25,7 @@
 - [Part 3 — AAA, Management & Monitoring](#-part-3--aaa-management--monitoring)
 - [Addressing Plan](#-addressing-plan)
 - [Validation Results](#-validation-results)
+- [Known Limitations](#-known-limitations)
 - [Repository Structure](#-repository-structure)
 - [How to Run](#-how-to-run)
 - [Skills Demonstrated](#-skills-demonstrated)
@@ -33,21 +34,21 @@
 
 ## 🎯 Project Overview
 
-Modern telecom operators must interconnect hundreds of enterprise clients over a **shared physical infrastructure** while guaranteeing complete traffic isolation, high availability, and centralized management.
+Telecom operators interconnect many enterprise clients over a **shared physical infrastructure** while keeping each client's traffic isolated, keeping service available when equipment fails, and managing everything centrally.
 
-This project designs, configures, and validates exactly that — a **production-realistic ISP network** built entirely from scratch in GNS3 using authentic Cisco IOS images.
+This project designs, configures, and validates that kind of network in GNS3 with Cisco IOS images.
 
 ### What was built
 
 | Component | Description |
 |---|---|
-| **IP/MPLS Backbone** | OSPF routing + MPLS label switching + VRF isolation + MP-BGP VPNv4 |
-| **Client Infrastructure** | VLANs + HSRP gateway redundancy + LACP EtherChannel + DHCP |
-| **Security & Management** | FreeRADIUS AAA + ACL access control + SNMP v3 + Zabbix + NTP + IP SLA |
+| **IP/MPLS Backbone** | OSPF routing + MPLS/LDP label switching + VRF isolation + MP-BGP VPNv4 |
+| **Client Infrastructure** | VLANs + HSRP gateway redundancy + LACP EtherChannel + DHCP + inter-VLAN routing |
+| **Security & Management** | FreeRADIUS AAA + VTY access lists + SNMP + Zabbix + NTP + Syslog + IP SLA |
 
 ### Why it matters
 
-> Building this from scratch required understanding how packets actually move through an operator backbone — not just theoretically, but down to individual label values visible in traceroute output, BGP route distinguishers, and RADIUS authentication exchanges captured with tcpdump.
+> Building this from scratch required understanding how packets actually move through an operator backbone — not just theoretically, but down to label entries in the MPLS forwarding table, BGP route distinguishers, and RADIUS authentication exchanges.
 
 ---
 
@@ -56,40 +57,44 @@ This project designs, configures, and validates exactly that — a **production-
 ### Physical Topology
 
 ```
-                    ┌─────────────────────────────────┐
-                    │         MPLS BACKBONE            │
-                    │                                  │
-                    │    [P1]─────────────[P2]         │
-                    │   /    \           /    \        │
-                    │  /      \         /      \       │
-                    │[PE1]     ─────── [PE2]           │
-                    │                                  │
-                    └─────────────────────────────────┘
-                      /    \                  /    \
-                  [CE11]  [CE21]          [CE12]  [CE22]
-                 Siege-1  Siege-2        Branch-1 Branch-2
+                         MPLS BACKBONE (AS 100)
 
-        ┌──────────────────────┐    ┌──────────────────────┐
-        │     SIEGE SITES      │    │    BRANCH SITES       │
-        │  Fédérateur1 (Active)│    │  CE12/CE22 (Router)   │
-        │  Fédérateur2 (Standby│    │  SW-Branch-L2         │
-        │  SW-Siege-L2/L3      │    │  VLAN 101/102/103/104 │
-        │  VLAN 10/15/20       │    └──────────────────────┘
-        │  HSRP + EtherChannel │
-        └──────────────────────┘
+                  [P1] 3.3.3.3 ─────────── [P2] 4.4.4.4
+                    │   ╲                 ╱   │
+                    │     ╲             ╱     │
+                    │       ╲         ╱       │
+                    │         ╲     ╱         │
+                    │           ╲ ╱           │
+                    │           ╱ ╲           │
+                    │         ╱     ╲         │
+                  [PE1] 1.1.1.1         [PE2] 2.2.2.2
+                   /     \                 /     \
+               [CE11]   [CE21]         [CE12]   [CE22]
+               Siege-1  Siege-2        Branch-1 Branch-2
 
-        ┌──────────────────────────────────────────────────┐
-        │              MANAGEMENT PLANE                     │
-        │  AAA-SRV (FreeRADIUS) · MON-SRV (Zabbix/NTP)    │
-        │  ADMIN1 · ADMIN2 — restricted VTY access only    │
-        └──────────────────────────────────────────────────┘
+        ┌────────────────────────┐    ┌────────────────────────┐
+        │      SIEGE SITES       │    │      BRANCH SITES      │
+        │  Fédérateur1 (Active)  │    │  CE12/CE22 (Router)    │
+        │  Fédérateur2 (Standby) │    │  Branch L2 switches    │
+        │  Siege L2 switches     │    │  VLAN 101/102/103/104  │
+        │  VLAN 10/15/20/30      │    └────────────────────────┘
+        │  HSRP + EtherChannel   │
+        └────────────────────────┘
+
+        ┌─────────────────────────────────────────────────────┐
+        │                  MANAGEMENT PLANE                   │
+        │  AAA-SRV (FreeRADIUS) · MON-SRV (Zabbix/NTP/Syslog) │
+        │  ADMIN1 · ADMIN2 — restricted VTY access            │
+        └─────────────────────────────────────────────────────┘
 ```
+
+Each PE connects to both P routers, and P1–P2 are linked directly. There is no direct PE1–PE2 link.
 
 ### Three Logical Planes
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  PLANE 1 — TRANSPORT        MPLS/LDP label switching         │
+│  PLANE 1 — TRANSPORT        MPLS/LDP label switching        │
 │  PLANE 2 — CONTROL          OSPF + MP-BGP VPNv4 routing     │
 │  PLANE 3 — MANAGEMENT       RADIUS + SNMP + Zabbix + NTP    │
 └─────────────────────────────────────────────────────────────┘
@@ -102,9 +107,9 @@ This project designs, configures, and validates exactly that — a **production-
 ### How MPLS VPN Works (End-to-End)
 
 ```
-CE11 sends packet → PE1 pushes TWO labels → P1/P2 swap outer label
-→ PE2 pops outer label (PHP) → PE2 uses inner label to find VRF
-→ PE2 forwards to CE12 in correct VPN
+CE11 sends packet → PE1 pushes TWO labels → P router forwards on the outer label
+→ outer label popped at the penultimate hop (PHP) → PE2 uses inner label to find VRF
+→ PE2 forwards to CE12 in the correct VPN
 ```
 
 Every packet crossing the backbone carries a label stack:
@@ -116,70 +121,76 @@ Every packet crossing the backbone carries a label stack:
 
 ### Step-by-Step Configuration
 
+The snippets below are excerpts from `configs/backbone/PE1.txt`.
+
 #### Step 1 — OSPF Backbone (Area 0)
-Establishes IP reachability between all backbone routers using loopbacks as stable Router-IDs.
+Establishes IP reachability between all backbone routers, with loopbacks as stable router IDs.
 
 ```cisco
 router ospf 1
- router-id 3.3.3.3
- network 10.0.0.0 0.255.255.255 area 0
- network 3.3.3.3 0.0.0.0 area 0
+ router-id 1.1.1.1
+ network 1.1.1.1 0.0.0.0 area 0
+ network 10.1.1.0 0.0.0.3 area 0
+ network 10.1.1.4 0.0.0.3 area 0
 ```
 
 #### Step 2 — MPLS/LDP Activation
-Enables label distribution on all backbone interfaces. LDP uses loopbacks for session stability.
+Enables label distribution on the backbone-facing interfaces.
 
 ```cisco
-mpls ip
 mpls label protocol ldp
-mpls ldp router-id Loopback0 force
-
+!
 interface FastEthernet0/0
  mpls ip
 ```
 
 #### Step 3 — VRF Creation
-Each customer gets an isolated routing table. Route Distinguisher makes routes unique globally; Route Targets control import/export between PEs.
+The customer gets its own routing table. The route distinguisher makes VPN routes unique; route targets control which routes each PE imports and exports.
 
 ```cisco
 ip vrf VPN_SSIR
  rd 65000:1
+ route-target export 65000:100
  route-target export 65000:1
+ route-target import 65000:100
  route-target import 65000:1
 ```
 
 #### Step 4 — MP-BGP VPNv4
-PE routers exchange VPN routes via iBGP. No P router needs to know customer routes — only PEs.
+PE1 and PE2 exchange VPN routes over iBGP between their loopbacks. P routers never carry customer routes.
 
 ```cisco
-router bgp 65000
+router bgp 100
+ no bgp default ipv4-unicast
  neighbor 2.2.2.2 remote-as 100
- neighbor 4.4.4.4 update-source Loopback0
+ neighbor 2.2.2.2 update-source Loopback0
  !
  address-family vpnv4
-  neighbor 4.4.4.4 activate
-  neighbor 4.4.4.4 send-community extended
+  neighbor 2.2.2.2 activate
+  neighbor 2.2.2.2 send-community both
 ```
 
 #### Step 5 — OSPF ↔ BGP Redistribution
-Customer routes learned via OSPF on PE interfaces are redistributed into BGP VPNv4, and vice versa.
+Customer routes learned through the VRF's OSPF process go into BGP VPNv4, and remote routes from BGP go back into OSPF.
 
 ```cisco
-router ospf 10 vrf VPN_SSIR
- redistribute bgp 65000 subnets
-router bgp 65000
+router ospf 100 vrf VPN_SSIR
+ redistribute bgp 100 subnets
+ network 192.168.1.0 0.0.0.3 area 11
+!
+router bgp 100
  address-family ipv4 vrf VPN_SSIR
-  redistribute ospf 10
+  redistribute ospf 100 vrf VPN_SSIR
 ```
 
-### Verification
+### Verification (from `tests/validation_output.md`)
 
 ```
-PE1# show mpls ldp neighbors          → LDP sessions: ESTABLISHED
-PE1# show bgp vpnv4 unicast all sum   → BGP session with PE2: ESTABLISHED  
-PE1# show ip route vrf VPN_SSIR       → Routes from all 4 CE sites present
-CE11# ping 12.12.12.12                → 5/5 success (100%)
-CE11# traceroute 12.12.12.12          → MPLS labels [24/25] visible at each hop
+PE1# show ip ospf neighbor            → FULL with P1, P2, CE11, CE21
+PE1# show mpls ldp neighbors          → 2 LDP peers (P1, P2), state Oper
+PE1# show bgp vpnv4 unicast all sum   → iBGP with PE2 (2.2.2.2) established, 4 prefixes received
+PE1# show ip route vrf VPN_SSIR       → local sites via OSPF (O), remote sites via BGP (B)
+CE11# ping (CE12, CE22)               → 5/5 success (100%)
 ```
 
 ---
@@ -188,7 +199,7 @@ CE11# traceroute 12.12.12.12          → MPLS labels [24/25] visible at each ho
 
 ### Siege Sites — Redundant Distribution Layer
 
-Each Siege site runs a dual-router distribution layer with full redundancy:
+Each Siege site runs two distribution switches (Fédérateur1 and Fédérateur2).
 
 **HSRP (Hot Standby Router Protocol)**
 ```
@@ -200,37 +211,39 @@ VLAN 15 → Virtual GW: 172.16.15.1
 VLAN 20 → Virtual GW: 172.16.20.1
 ```
 
-If Fédérateur1 fails → Fédérateur2 takes over in ~3 seconds. End users notice nothing.
+If Fédérateur1 fails, Fédérateur2 takes over the virtual gateway. With default HSRP timers (hello 3 s, hold 10 s), the switchover takes up to about 10 seconds.
 
 **LACP EtherChannel**
 ```
-Fédérateur1 ←──── Port-Channel 1 (LACP) ────→ Fédérateur2
-                  Et0/2 bundled → SU state
-                  VLANs 10, 15, 20, 30 trunked
+Fédérateur1 ──── Port-Channel 1 (LACP, mode active) ──── Fédérateur2
+                 Member: Et0/2 → Po1 (SU)
+                 VLANs 10, 15, 30 trunked
 ```
-Doubles bandwidth AND provides link redundancy between distribution switches.
+LACP negotiates the port-channel successfully. In the lab capture only one member link (Et0/2) is bundled, so it demonstrates the LACP setup rather than added bandwidth (see [Known Limitations](#-known-limitations)).
 
 **VLAN Segmentation**
 ```
 VLAN 10  — DATA1       172.16.10.0/24   User group 1
 VLAN 15  — DATA2       172.16.15.0/24   User group 2
-VLAN 20  — Management  172.16.20.0/24   Network devices
-VLAN 30  — WAN         192.168.1.44/30  Uplink to PE
+VLAN 20  — Management  172.16.20.0/24   Network devices and servers
+VLAN 30  — WAN         192.168.1.44/30  Transit link
 ```
 
 ### Branch Sites — Inter-VLAN Routing
 
-Branch sites use router-on-a-stick (subinterfaces on CE router):
+Branch sites use router-on-a-stick (subinterfaces on the CE router). Excerpt from `CE12.txt`:
 
 ```cisco
-interface FastEthernet0/0.101
+interface FastEthernet1/0.101
  encapsulation dot1Q 101
  ip address 172.16.101.1 255.255.255.0
 
-interface FastEthernet0/0.102
+interface FastEthernet1/0.102
  encapsulation dot1Q 102
  ip address 172.16.102.1 255.255.255.0
 ```
+
+DHCP pools are configured on the Fédérateurs and on CE12/CE22.
 
 ---
 
@@ -238,7 +251,7 @@ interface FastEthernet0/0.102
 
 ### AAA — FreeRADIUS Authentication
 
-All network devices authenticate administrators against a central RADIUS server before granting access. Local database is fallback only.
+Network devices authenticate administrators against a central RADIUS server. The local database is the fallback.
 
 ```
 Admin connects via Telnet/SSH
@@ -247,50 +260,56 @@ Device sends Access-Request → AAA-SRV (172.16.20.200:1812)
         ↓
 AAA-SRV replies: Access-Accept (privilege 15) or Access-Reject
         ↓
-If RADIUS unreachable → local user database (fallback)
+If RADIUS is unreachable → local user database (fallback)
 ```
 
 ```cisco
 aaa new-model
-radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key VPN_SECURITY
+radius-server host 172.16.20.200 auth-port 1812 acct-port 1813 key <REDACTED>
 aaa authentication login default group radius local
 aaa authorization exec default group radius local
+aaa accounting exec default start-stop group radius
 ```
 
 ### ACL VTY — Management Plane Protection
 
-Only ADMIN1 and ADMIN2 hosts can reach device management interfaces:
+Management access is limited to the two admin hosts (ADMIN1 and ADMIN2) and to CE11's WAN address (192.168.1.2). Excerpt from `Federateur1.txt`:
 
 ```cisco
 ip access-list extended VTY_ACCESS
  permit tcp host 172.16.20.100 any eq 22
- permit tcp host 172.16.20.100 any eq 23
+ permit tcp host 172.16.20.100 any eq telnet
  permit tcp host 172.16.20.150 any eq 22
- permit tcp host 172.16.20.150 any eq 23
- deny   ip any any log
+ permit tcp host 172.16.20.150 any eq telnet
+ permit tcp host 192.168.1.2 any eq 22
+ permit tcp host 192.168.1.2 any eq telnet
 
 line vty 0 4
  access-class VTY_ACCESS in
+ transport input telnet ssh
 ```
 
-Any other host attempting SSH/Telnet is **silently dropped and logged**.
+Connections from any other host are refused.
 
-### SNMP v3 — Secure Monitoring
+### SNMP — Monitoring and Traps
 
-SNMP v3 with authentication + privacy (no community strings — actual crypto):
+Devices send SNMP traps to MON-SRV (172.16.20.250), which runs Zabbix. The client devices (CE routers, Fédérateurs and L2 switches) have SNMPv3 trap destinations, one with authentication only and one with authentication and privacy. SNMPv2c is still enabled on every device, and the backbone routers (PE1, PE2) use SNMPv2c only.
 
 ```cisco
+! Client device excerpt (community string redacted)
 snmp-server group TEKUP v3 auth
-snmp-server user TEKUP TEKUP v3 auth md5 SSIR
 snmp-server host 172.16.20.250 version 3 auth TEKUP
-snmp-server enable traps ospf cisco-specific state-change
-snmp-server enable traps config
-snmp-server enable traps sla
+snmp-server host 172.16.20.250 version 3 priv snmpuser
+snmp-server host 172.16.20.250 version 2c <REDACTED>
+snmp-server enable traps ospf state-change
+snmp-server enable traps ipsla
 ```
 
-### Zabbix — Real-Time Dashboard
+In production, SNMPv2c would be removed and only SNMPv3 users with SHA authentication and AES privacy would be kept.
 
-Zabbix monitors all 11 network devices simultaneously:
+### Zabbix — Dashboard
+
+Zabbix monitors 11 hosts: the 10 client network devices and the Zabbix server itself.
 
 ```
 Monitored hosts: CE-Branch1, CE-Branch2, CE11, CE21,
@@ -298,80 +317,101 @@ Monitored hosts: CE-Branch1, CE-Branch2, CE11, CE21,
                  SW-Branch1-L2, SW-Branch2-L2, Zabbix server
 ```
 
-SNMP traps are received and parsed in real time. Configuration change events trigger immediate alerts.
+NTP and Syslog also point to MON-SRV (172.16.20.250).
 
 ### IP SLA — Performance Measurement
 
-UDP-jitter probes run continuously between Branch and Siege sites:
+UDP-jitter probes run every 300 seconds from the Branch sites toward the Siege sites. Excerpt from `CE12.txt` (CE-Branch1):
 
 ```cisco
-! On CE-Branch1
 ip sla 11
- udp-jitter 192.168.1.2 5000 num-packets 10
+ udp-jitter 192.168.1.2 5000
  frequency 300
 ip sla schedule 11 life forever start-time now
+```
 
-! Measured results:
-! RTT Min/Avg/Max: 87/118/157 ms
-! Jitter S→D Min/Avg/Max: 1/20/44 ms
-! Packet loss: 0
+Measured (`show ip sla statistics 11`):
+
+```
+RTT Min/Avg/Max:                       104/118/148 ms
+Jitter source → destination Min/Avg/Max: 0/14/44 ms
+Packet loss:                           0
 ```
 
 ---
 
 ## 📊 Addressing Plan
 
+Taken from the running configurations in `configs/`.
+
 ### Backbone — OSPF Area 0
 
 | Link | Network | Router 1 | Router 2 |
 |---|---|---|---|
-| PE1 – P1 | 10.1.1.0/30 | 10.1.1.1 | 10.1.1.2 |
-| PE1 – P2 | 10.1.2.0/30 | 10.1.2.1 | 10.1.2.2 |
-| PE2 – P1 | 10.2.1.0/30 | 10.2.1.2 | 10.2.1.1 |
-| PE2 – P2 | 10.2.2.0/30 | 10.2.2.1 | 10.2.2.2 |
-| P1 – P2  | 10.0.0.0/30 | 10.0.0.1 | 10.0.0.2 |
+| PE1 – P1 | 10.1.1.0/30  | PE1 10.1.1.1  | P1 10.1.1.2  |
+| PE1 – P2 | 10.1.1.4/30  | PE1 10.1.1.5  | P2 10.1.1.6  |
+| PE2 – P2 | 10.1.1.8/30  | PE2 10.1.1.9  | P2 10.1.1.10 |
+| PE2 – P1 | 10.1.1.12/30 | PE2 10.1.1.13 | P1 10.1.1.14 |
+| P1 – P2  | 10.1.1.20/30 | P1 10.1.1.21  | P2 10.1.1.22 |
 
-| Router | Role | Loopback |
+| Router | Role | Loopback0 |
 |---|---|---|
-| PE1 | Provider Edge 1 | 3.3.3.3/32 |
-| PE2 | Provider Edge 2 | 4.4.4.4/32 |
-| P1  | Provider 1      | 1.1.1.1/32 |
-| P2  | Provider 2      | 2.2.2.2/32 |
+| PE1 | Provider Edge 1 | 1.1.1.1/32 |
+| PE2 | Provider Edge 2 | 2.2.2.2/32 |
+| P1  | Provider 1      | 3.3.3.3/32 |
+| P2  | Provider 2      | 4.4.4.4/32 |
 
-### Customer Sites — VPN_SSIR
+### Customer Sites — VRF VPN_SSIR
 
-| CE | Role | WAN to PE | Loopback | PE |
+| CE | Role | Link to PE | Loopback0 | PE |
 |---|---|---|---|---|
-| CE11 | Siege 1  | 192.168.11.0/30 | 11.11.11.11/32 | PE1 |
-| CE12 | Branch 1 | 192.168.12.0/30 | 12.12.12.12/32 | PE2 |
-| CE21 | Siege 2  | 192.168.21.0/30 | 21.21.21.21/32 | PE1 |
-| CE22 | Branch 2 | 192.168.22.0/30 | 22.22.22.22/32 | PE2 |
+| CE11 | Siege 1  | 192.168.1.0/30  | 172.16.11.11/32 | PE1 |
+| CE21 | Siege 2  | 192.168.1.4/30  | 172.16.21.21/32 | PE1 |
+| CE12 | Branch 1 | 192.168.1.8/30  | 172.16.12.12/32 | PE2 |
+| CE22 | Branch 2 | 192.168.1.12/30 | 172.16.22.22/32 | PE2 |
+
+CE11 and CE21 connect to their Siege distribution layer over 192.168.11.0/30 and 192.168.21.0/30.
 
 ---
 
 ## ✅ Validation Results
 
-Every single test passed on first attempt after full configuration.
+| Test | Method | Result | Evidence |
+|---|---|---|---|
+| OSPF adjacencies | `show ip ospf neighbor` | ✅ FULL with P1, P2, CE11, CE21 (PE1) | `tests/` |
+| LDP sessions | `show mpls ldp neighbors` | ✅ Oper, 2 peers on PE1 | `tests/` |
+| LFIB table | `show mpls forwarding-table` | ✅ Pop Label (PHP) and VRF entries present | `tests/` |
+| MP-BGP VPNv4 | `show bgp vpnv4 unicast all summary` | ✅ Established with PE2, AS 100, 4 prefixes received | `tests/` |
+| VRF routes | `show ip route vrf VPN_SSIR` | ✅ Local sites via OSPF, remote sites via BGP | `tests/` |
+| End-to-end ping | CE11 → CE12, CE22 | ✅ 100% success (5/5) | `tests/` |
+| MPLS traceroute | CE11 → CE12 | ✅ MPLS labels visible at each hop | report |
+| HSRP Active/Standby | `show standby brief` | ✅ Fédérateur1 Active, Fédérateur2 Standby | `tests/` |
+| EtherChannel LACP | `show etherchannel summary` | ✅ Po1(SU), LACP | `tests/` |
+| DHCP distribution | PC client lease | ✅ Address from the correct pool | report |
+| RADIUS auth | Telnet from ADMIN1 | ✅ Access-Accept received | report |
+| ACL VTY block | Telnet from unauthorized IP | ✅ Connection refused | report |
+| SNMP traps | `tcpdump` on MON-SRV | ✅ Traps received | report |
+| Zabbix dashboard | Web UI 172.16.20.250/zabbix | ✅ Hosts monitored | report |
+| NTP sync | `show ntp status` | ✅ Synchronized to 172.16.20.250 | report |
+| Syslog collection | `journalctl` on MON-SRV | ✅ Events received | report |
+| IP SLA jitter | `show ip sla statistics 11` | ✅ RTT 104–148 ms, 0 packet loss | `tests/` |
 
-| Test | Method | Result |
-|---|---|---|
-| OSPF adjacencies | `show ip ospf neighbor` | ✅ FULL/BDR on all interfaces |
-| LDP sessions | `show mpls ldp neighbors` | ✅ Oper state — 3 peers on P1 |
-| LFIB table | `show mpls forwarding-table` | ✅ Pop Label entries present |
-| MP-BGP VPNv4 | `show bgp vpnv4 unicast all summary` | ✅ Established (Up 00:32:27) |
-| VPN routes | `show ip bgp vpnv4 vrf VPN_SSIR` | ✅ All 8 prefixes learned |
-| End-to-end ping | CE11 → CE12, CE21, CE22 | ✅ 100% success (5/5) |
-| MPLS traceroute | CE11 → CE12 | ✅ Labels [24/25] visible at each hop |
-| HSRP Active/Standby | `show standby brief` | ✅ Fed1 Active, Fed2 Standby |
-| EtherChannel LACP | `show etherchannel summary` | ✅ Po1(SU) — bundled |
-| DHCP distribution | PC client lease | ✅ Address from correct pool |
-| RADIUS auth | Telnet from ADMIN1 | ✅ Access-Accept received |
-| ACL VTY block | Telnet from unauthorized IP | ✅ Connection refused |
-| SNMP traps | `tcpdump` on MON-SRV | ✅ Traps received on config change |
-| Zabbix dashboard | Web UI 172.16.20.250/zabbix | ✅ 11 hosts monitored, green |
-| NTP sync | `show ntp status` | ✅ Synchronized to 172.16.20.250 |
-| Syslog collection | `journalctl` on MON-SRV | ✅ Events received |
-| IP SLA jitter | `show ip sla statistics 11` | ✅ RTT 87–157ms, 0 packet loss |
+`tests/` = raw CLI output in `tests/validation_output.md`. report = screenshots in `report/Rapport_MPLS_VPN.pdf`.
+
+---
+
+## ⚠️ Known Limitations
+
+This is a lab, and some choices would change in production:
+
+- **SNMPv2c is still enabled** on every device, and the backbone routers use only v2c. Production: remove v2c and keep SNMPv3 users with SHA + AES.
+- **VTY lines accept Telnet** as well as SSH. Production: `transport input ssh` and remove the Telnet entries from the ACL.
+- **Switch enable secrets use Cisco type 4 hashes**, which Cisco has deprecated. Production: type 8 or 9 (`enable algorithm-type scrypt secret ...`).
+- **Port-channel 1 has a single member link** (Et0/2) in the captured output, so it shows LACP negotiation but adds no bandwidth or link redundancy. A second member port is needed for that.
+- **Extra trap destination**: CE11, CE12, CE21 and CE22 also send SNMPv3 traps to `172.16.220.250`, a typo for `172.16.20.250`.
+- **The PDF report's addressing tables differ from the final configs** (the report shows BGP AS 65000 and different loopbacks). The final state is the running configs in `configs/` and the CLI output in `tests/` (AS 100).
+
+Secrets (RADIUS key, SNMP community strings, password hashes and line passwords) are replaced with `<REDACTED>` in `configs/`.
 
 ---
 
@@ -383,33 +423,33 @@ ip-mpls-backbone-vpn-gns3/
 ├── README.md
 │
 ├── report/
-│   └── Rapport_MPLS_VPN.pdf          ← Full project report (French, 28 pages)
+│   └── Rapport_MPLS_VPN.pdf          ← Full project report (French)
 │
 ├── topology/
+│   ├── topology.png                   ← Full topology
 │   ├── topology_backbone.png          ← GNS3 topology screenshot — Part 1
 │   └── topology_client.png            ← GNS3 topology screenshot — Part 2
 │
-├── configs/
+├── configs/                           ← show running-config exports (secrets redacted)
 │   ├── backbone/
-│   │   ├── PE1.txt                    ← show running-config
+│   │   ├── PE1.txt
 │   │   ├── PE2.txt
 │   │   ├── P1.txt
 │   │   └── P2.txt
-│   ├── client/
-│   │   ├── CE11.txt
-│   │   ├── CE12.txt
-│   │   ├── CE21.txt
-│   │   ├── CE22.txt
-│   │   ├── Federateur1.txt
-│   │   ├── Federateur2.txt
-│   │   ├── SW-Siege1-L2.txt
-│   │   └── SW-Branch1-L2.txt
-│   └── management/
-│       ├── AAA-SRV_radius.conf        ← FreeRADIUS config
-│       └── snmp_config_sample.txt     ← SNMP v3 config reference
+│   └── client/
+│       ├── CE11.txt
+│       ├── CE12.txt
+│       ├── CE21.txt
+│       ├── CE22.txt
+│       ├── Federateur1.txt
+│       ├── Federateur2.txt
+│       ├── Siege1-L2.txt
+│       ├── Siege2-L2.txt
+│       ├── Branch1-L2.txt
+│       └── Branch2-L2.txt
 │
 └── tests/
-    └── validation_output.md           ← Raw CLI output from all show commands
+    └── validation_output.md           ← Raw CLI output from the show commands
 ```
 
 ---
@@ -419,26 +459,26 @@ ip-mpls-backbone-vpn-gns3/
 ### Requirements
 - [GNS3](https://www.gns3.com/) 2.2+
 - Cisco IOS images: `c7200`, `c3725` or similar (IOU for L2 switches)
-- Minimum 8GB RAM recommended (OSPF + MPLS + Zabbix running simultaneously)
+- Minimum 8 GB RAM recommended (OSPF + MPLS + Zabbix running simultaneously)
 
 ### Steps
 1. Clone this repository
 ```bash
-git clone https://github.com/yousseftalbi/ip-mpls-backbone-vpn-gns3.git
+git clone https://github.com/youssef-talbi/ip-mpls-backbone-vpn-gns3.git
 ```
 
-2. Import the topology into GNS3 (File → Import portable project)
+2. Build the topology in GNS3 following `topology/topology.png` (the repository does not include a GNS3 project file)
 
 3. Start devices in this order:
 ```
-1. P1, P2           (backbone core first)
-2. PE1, PE2         (provider edge)
+1. P1, P2                   (backbone core first)
+2. PE1, PE2                 (provider edge)
 3. CE11, CE12, CE21, CE22   (customer edge)
 4. Fédérateur1/2, switches  (client sites)
 5. AAA-SRV, MON-SRV         (management last)
 ```
 
-4. Apply configurations from `/configs/` to each device
+4. Apply the configurations from `configs/` to each device, replacing every `<REDACTED>` value with your own secret
 
 5. Verify with the commands in the [Validation Results](#-validation-results) section
 
@@ -450,7 +490,7 @@ git clone https://github.com/yousseftalbi/ip-mpls-backbone-vpn-gns3.git
 
 `Cisco IOS` `MPLS` `LDP` `OSPF` `MP-BGP` `VPNv4` `VRF` `L3VPN`  
 `HSRP` `LACP EtherChannel` `VLAN` `Inter-VLAN Routing` `DHCP`  
-`FreeRADIUS` `AAA` `ACL` `SNMP v3` `Zabbix` `NTP` `Syslog` `IP SLA`  
+`FreeRADIUS` `AAA` `ACL` `SNMP` `Zabbix` `NTP` `Syslog` `IP SLA`  
 `GNS3` `Network Security` `Infrastructure Design` `ISP Architecture`
 
 </div>
