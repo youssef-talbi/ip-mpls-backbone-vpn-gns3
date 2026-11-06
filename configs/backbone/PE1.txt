@@ -205,7 +205,7 @@ no cdp log mismatch duplex
 !
 snmp-server group TEKUP v3 auth 
 snmp-server group MYGROUP v3 auth 
-snmp-server community <REDACTED> RO
+snmp-server community SSIR RO
 snmp-server trap-source Loopback0
 snmp-server location SSIR_Backbone
 snmp-server contact youssef
@@ -213,7 +213,7 @@ snmp-server enable traps snmp linkdown linkup
 snmp-server enable traps ospf cisco-specific state-change nssa-trans-change
 snmp-server enable traps config
 snmp-server enable traps ipsla
-snmp-server host 172.16.20.250 version 2c <REDACTED> 
+snmp-server host 172.16.20.250 version 2c SSIR 
 !
 !
 control-plane
